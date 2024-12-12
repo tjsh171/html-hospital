@@ -6,7 +6,7 @@ Features:
 3)Cross-browser compatibility.
 4)Optimized for desktop and mobile devices.
 project-folder/
-│
+
 ├── index.html       # includes HTML,CSS,JavaScript File
 |
 │       

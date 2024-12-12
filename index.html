@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Header and Menu Bar</title>
+
+    <!-- Include Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="owl.css">
+    
+    
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+    <style>
+        .loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #333333;
+  z-index: 9999;
+  transition: opacity 0.75s, visibility 0.75s;
+}
+
+.loader--hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader::after {
+  content: "";
+  width: 75px;
+  height: 75px;
+  border: 15px solid #dddddd;
+  border-top-color: #009578;
+  border-radius: 50%;
+  animation: loading 0.75s ease infinite;
+}
+
+@keyframes loading {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+        /* Basic styles for the header */
+        html {
+  scroll-behavior: smooth; /* This enables smooth scrolling */
+}
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header Section (White Background) */
+        header {
+            background-color: white; /* White background */
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 2px solid #ddd; /* Subtle border for separation */
+        }
+
+        /* Icon and description on the left */
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-left i {
+            font-size: 30px;
+            margin-right: 10px;
+            color: #007bff; /* Icon color matching the menu bar */
+        }
+
+        .header-left .description {
+            font-size: 18px;
+        }
+
+        /* Right section with links to book appointments, call, and email */
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-right a {
+            margin-left: 15px;
+        }
+
+        .header-right a i {
+            font-size: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .header-right a:hover i {
+            color: #0056b3;
+        }
+
+        /* Menu Bar Section (Blue Background) */
+        /* Default styling for the menu bar */
+/* Default styling for the menu bar */
+.menu-bar {
+            background-color: #007bff; /* Blue background */
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            flex-wrap: wrap; /* Wrap items on smaller screens */
+        }
+
+        /* Menu items */
+        .menu-bar a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-bar a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            border-radius: 5px;
+        }
+
+        .menu-bar a i {
+            margin-right: 8px;
+        }
+
+        /* Search container (hidden by default) */
+        .search-container {
+            display: none;
+            text-align: right;
+        }
+
+        /* Small search icon (on the right) */
+        .search-icon {
+            font-size: 20px;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* Hamburger menu for mobile */
+        .menu-bar .menu-icon {
+            display: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* Menu items hidden on mobile */
+        .menu-items {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        /* Show menu items when menu button is clicked */
+        .menu-bar.active .menu-items {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        /* Responsive media query */
+        @media (max-width: 768px) {
+            .menu-bar .menu-items {
+                display: none;
+                width: 100%;
+            }
+
+            .menu-bar .menu-icon {
+                display: block;
+            }
+        }
+
+     /* Main Carousel Container */
+/* Owl Carousel Custom Styles */
+/* Owl Carousel Full Width */
+.owl-carousel {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.owl-carousel .owl-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.owl-carousel .carousel-item {
+  background: linear-gradient(to right, #007bff, #00aaff);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 20px;
+  color: white;
+ 
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.owl-carousel .carousel-item h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.owl-carousel .carousel-item p {
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+.book-now-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.book-now-btn:hover {
+  background-color: #0056b3;
+}
+
+.owl-carousel .carousel-item img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Full Screen Image */
+.owl-carousel .carousel-item img {
+  max-width: 30%; /* Ensure image doesn't take up too much space */
+}
+
+/* Mobile Styling */
+@media (max-width: 768px) {
+  .owl-carousel .carousel-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .owl-carousel .carousel-item img {
+    margin-top: 20px;
+    max-width: 100px;
+  }
+
+  .owl-carousel .carousel-item h1 {
+    font-size: 30px;
+  }
+
+  .owl-carousel .carousel-item p {
+    font-size: 16px;
+    padding: 0 10px;
+  }
+
+  .book-now-btn {
+    font-size: 16px;
+  }
+}
+
+/* Submenu Bar Styling */
+.submenu-container {
+  margin-top: 20px;
+  text-align: center;
+  position: relative;
+}
+
+/* Submenu Styling */
+.submenu {
+  background-color: white;
+  padding: 15px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.submenu ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+.submenu ul li {
+  margin: 0 20px;
+  font-size: 18px;
+}
+
+.submenu ul li a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.submenu ul li a:hover {
+  color: #007bff;
+}
+
+/* Dots Between Menu Items */
+.submenu ul li:not(:last-child):after {
+  content: "•";
+  margin-left: 10px;
+  color: black;
+  font-size: 20px;
+}
+
+/* Button to Toggle Submenu */
+
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .submenu-container {
+    text-align: center;
+  }
+
+  .submenu ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .submenu-toggle {
+    display: block;
+  }
+
+  /* Show submenu when active */
+  .submenu.active {
+    display: block;
+  }
+}
+
+/* Show Submenu by Default on Larger Screens */
+@media (min-width: 769px) {
+  .submenu {
+    display: flex; /* Make submenu visible on larger screens */
+  }
+}
+/* Overview Section Styling */
+.overview-section {
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+}
+
+.overview-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.text {
+  max-width: 60%;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.text h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.image {
+  max-width: 35%;
+  margin-left: 20px;
+}
+
+.image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .overview-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .text {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .image {
+    max-width: 100%;
+  }
+}
+
+/* Content Section Styling */
+/* Content Section Styling */
+.content-section {
+  padding: 50px 20px;
+  background-color: #f8f8f8;
+  text-align: center;
+}
+
+.section-text {
+  max-width: 80%;
+  margin: 0 auto 40px;
+}
+
+.section-text h2 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.section-text p {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+
+/* Combined Owl Carousel - Media (Video, Image) */
+.owl-carousel.owl-media .item {
+  margin: 10px;
+}
+
+.owl-carousel.owl-media iframe {
+  width: 100%;
+  height: 300px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.owl-carousel.owl-media img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .section-text {
+    max-width: 90%;
+  }
+  
+  .owl-carousel .item {
+    margin: 5px;
+  }
+}
+/* Top Doctors Section */
+/* Top Doctors Section */
+/* Slider Section */
+.slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
+}
+
+/* Card */
+.card {
+  width: 280px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  margin: 0 15px;  /* Space between the cards */
+}
+
+/* Card Image */
+.card .img img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-bottom: 2px solid #ddd;
+  transition: transform 0.3s ease;
+}
+
+.card .img:hover img {
+  transform: scale(1.1);
+}
+
+/* Card Content */
+.card .content {
+  padding: 20px;
+}
+
+/* Title */
+.card .content .title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Subtitle */
+.card .content .sub-title {
+  font-size: 18px;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+/* Paragraph */
+.card .content p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+/* Button */
+.card .content .btn button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.card .content .btn button:hover {
+  background-color: #0056b3;
+}
+
+/* Owl Carousel Styling */
+.owl-carousel .owl-nav button {
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.owl-carousel .owl-nav button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Styling */
+@media (max-width: 600px) {
+  .card {
+    width: 90%;
+    margin: 0 10px; /* Reduce space between cards on smaller screens */
+  }
+
+  .card .content .title {
+    font-size: 18px;
+  }
+
+  .card .content .sub-title {
+    font-size: 16px;
+  }
+
+  .card .content p {
+    font-size: 12px;
+  }
+}
+
+/* Section Styling */
+.top-doctors-section {
+  padding: 40px;
+  background: linear-gradient(135deg, #4682b4, #5f9ea0);
+ /* Matches previous stylings */
+  text-align: center;
+}
+
+.section-heading {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #cdd5dd;
+}
+
+/* Carousel Container */
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+/* Doctors Carousel */
+.doctors-carousel {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+/* Doctor Card */
+.doctor-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  flex: 0 0 25%; /* Show 4 cards on large screens */
+  text-align: center;
+}
+
+.doctor-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.doctor-info {
+  padding: 10px;
+}
+
+.doctor-info h3 {
+  font-size: 18px;
+  color: #070056;
+}
+
+.doctor-info p {
+  font-size: 14px;
+  color: #777;
+}
+
+/* Navigation Buttons */
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.nav-button.prev {
+  left: 10px;
+}
+
+.nav-button.next {
+  right: 10px;
+}
+
+.nav-button:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 900px) {
+  .doctor-card {
+    flex: 0 0 50%; /* Show 2 cards on medium screens */
+  }
+}
+
+@media (max-width: 600px) {
+  .doctor-card {
+    flex: 0 0 100%; /* Show 1 card on small screens */
+  }
+}
+
+.stay-healthy-section {
+     background: linear-gradient(to right, #007bff, #00aaff); ; /* Same as header section color */
+    padding: 50px;
+    text-align: center;
+    color: white;
+}
+
+.stay-healthy-heading {
+    font-size: 24px;
+    text-transform: lowercase; /* Ensuring the small letter style */
+    font-weight: 400;
+}
+
+.vedic-care-heading {
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.fitness-question {
+    font-size: 20px;
+    margin: 20px 0;
+    font-weight: 500;
+}
+
+.take-survey-btn {
+    background-color: #ffffff;
+    color: #0066cc;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.take-survey-btn:hover {
+    background-color: #005bb5;
+    color: white;
+}
+.col_white_amrc { color:#FFF;}
+footer { width:100%; background-color:#263238; min-height:250px; padding:10px 0px 25px 0px ;}
+.pt2 { padding-top:40px ; margin-bottom:20px ;}
+footer p { font-size:13px; color:#CCC; padding-bottom:0px; margin-bottom:8px;}
+.mb10 { padding-bottom:15px ;}
+.footer_ul_amrc { margin:0px ; list-style-type:none ; font-size:14px; padding:0px 0px 10px 0px ; }
+.footer_ul_amrc li {padding:0px 0px 5px 0px;}
+.footer_ul_amrc li a{ color:#CCC;}
+.footer_ul_amrc li a:hover{ color:#fff; text-decoration:none;}
+.fleft { float:left;}
+.padding-right { padding-right:10px; }
+
+.footer_ul2_amrc {margin:0px; list-style-type:none; padding:0px;}
+.footer_ul2_amrc li p { display:table; }
+.footer_ul2_amrc li a:hover { text-decoration:none;}
+.footer_ul2_amrc li i { margin-top:5px;}
+
+.bottom_border { border-bottom:1px solid #323f45; padding-bottom:20px;}
+.foote_bottom_ul_amrc {
+	list-style-type:none;
+	padding:0px;
+	display:table;
+	margin-top: 10px;
+	margin-right: auto;
+	margin-bottom: 10px;
+	margin-left: auto;
+}
+.foote_bottom_ul_amrc li { display:inline;}
+.foote_bottom_ul_amrc li a { color:#999; margin:0 12px;}
+
+.social_footer_ul { display:table; margin:15px auto 0 auto; list-style-type:none;  }
+.social_footer_ul li { padding-left:20px; padding-top:10px; float:left; }
+.social_footer_ul li a { color:#CCC; border:1px solid #CCC; padding:8px;border-radius:50%;}
+.social_footer_ul li i {  width:20px; height:20px; text-align:center;}
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+}
+
+.footer-logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.footer-description {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.foote_bottom_ul_amrc {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+}
+
+.foote_bottom_ul_amrc li {
+    display: inline;
+}
+
+.foote_bottom_ul_amrc li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.social_footer_ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+    margin-left: auto;  /* This will push the social icons to the right */
+}
+
+.social_footer_ul li {
+    display: inline;
+}
+
+.social_footer_ul li a {
+    color:white;
+    font-size: 20px;
+}
+
+.text-center {
+    text-align: center;
+    margin-top: 10px;
+}
+/* Styling for the card */
+.doctor-join-card {
+    background-color: #f0f8ff; /* Light blue background for the card */
+    padding: 20px;
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    text-align: center;
+    margin: 20px auto; /* Center align the card with space around */
+    max-width: 400px; /* Limiting the max width */
+}
+
+.doctor-join-card h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.doctor-join-card p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.doctor-join-card .join-button {
+    background-color: #007bff; /* Blue button background */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px; /* Rounded button */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.doctor-join-card .join-button:hover {
+    background-color: #0056b3; /* Darker blue when button is hovered */
+}
+
+/* Popup Styling */
+.contact-popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background:  #007bff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transform: scale(0);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 9999;
+}
+
+.contact-popup.show {
+  transform: scale(1);
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup-content {
+  color: white;
+  text-align: center;
+}
+
+.popup-content h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.popup-content p {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+#contact-btn {
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#contact-btn:hover {
+  background-color: #ff6600;
+}
+/* Page Loader - Fullscreen Overlay */
+
+/* Cuboid boilerplate code */
+
+/* Page Loader - Fullscreen Overlay */
+
+
+ </style>
+</head>
+<body>
+    <div class="loader"></div>
+    <!-- Header Section -->
+    <header>
+        <!-- Left section with icon and description -->
+        <div class="header-left">
+            <i class="fas fa-calendar-check"></i> <!-- Icon for description -->
+            <div class="description">VediCare</div>
+        </div>
+
+        <!-- Right section with clickable icons (No text links) -->
+        <div class="header-right">
+            <a href="#"><i class="fas fa-calendar-plus"></i></a> <!-- Book Appointment -->
+            <a href="tel:+1234567890"><i class="fas fa-phone-alt"></i></a> <!-- Call -->
+            <a href="mailto:info@example.com"><i class="fas fa-envelope"></i></a> <!-- Email -->
+        </div>
+    </header>
+
+    <!-- Menu Bar Section -->
+    
+
+        <!-- Menu items -->
+        
+       
+  
+      <!-- Menu Bar Section -->
+      <div class="menu-bar">
+          <!-- Hamburger icon -->
+          <span class="menu-icon" id="menu-toggle">
+              <i class="fas fa-bars"></i>
+          </span>
+  
+          <!-- Menu items -->
+          <div class="menu-items">
+              <a href="#"><i class="fas fa-home"></i>Home</a>
+              <a href="#"><i class="fas fa-users"></i>About Us</a>
+              <a href="#"><i class="fas fa-procedures"></i>Treatments</a>
+              <a href="#"><i class="fas fa-map-marker-alt"></i>Destinations</a>
+              <a href="#"><i class="fas fa-hospital"></i>Hospitals</a>
+              <a href="#"><i class="fas fa-question-circle"></i>FAQs</a>
+              <a href="#"><i class="fas fa-blog"></i>Blog</a>
+              <a href="#"><i class="fas fa-file-invoice"></i>Request a Quote</a>
+          </div>
+  
+          <!-- Small search icon on the rightmost side -->
+          <div class="search-container">
+              <input type="text" placeholder="Search...">
+          </div>
+  
+          <!-- Search icon to show input -->
+          <span class="search-icon" id="search-toggle">
+              <i class="fas fa-search"></i>
+          </span>
+      </div>
+      
+    <!-- Owl Carousel HTML -->
+<div id="carouselExample" class="owl-carousel owl-theme">
+    <div class="carousel-item">
+      <div>
+        <h1>Explore Our Treatments</h1>
+        <p>We offer world-class treatments for all your needs.</p>
+        <a href="#" class="book-now-btn">Book Now</a>
+      </div>
+      <img src="./icons8-dr-48.png" alt="Treatment Image">
+    </div>
+    <div class="carousel-item">
+      <div>
+        <h1>Wellness at Your Fingertips</h1>
+        <p>Book your appointment today and start your journey to better health.</p>
+        <a href="#" class="book-now-btn">Book Now</a>
+      </div>
+      <img src="./icons8-dr-48.png" alt="Treatment Image">
+    </div>
+    <!-- Add more carousel items as needed -->
+  </div>
+  <!-- Submenu (Hidden on larger screens, shown on smaller screens) -->
+<!-- Submenu -->
+<!-- Submenu Button at the Bottom of the Carousel -->
+<!-- Owl Carousel Section -->
+<div class="owl-carousel">
+    <!-- Your carousel items go here -->
+  </div>
+  
+  <!-- Submenu Bar (Visible on Large Screens, Hidden on Small Screens) -->
+  <div class="submenu-container">
+    <div class="submenu">
+      <ul>
+        <li><a href="#o">Overview</a></li>
+        <li><a href="#e">Eligibility</a></li>
+        <li><a href="#p">Preparation</a></li>
+        <li><a href="#at">About Treatment</a></li>
+        <li><a href="#ptc">Post Treatment Care</a></li>
+        <li><a href="#rt">Recovery Tips</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#ps">Patient Stories</a></li>
+      </ul>
+    </div>
+  
+  
+  </div>
+  <hr style="border: 1px dotted #007bff; margin: 0;">
+  <section class="overview-section" id="o">
+    <div class="overview-content">
+      <div class="text">
+        <h2>Overview</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula ipsum vel libero fermentum, non dapibus nunc venenatis. Vestibulum euismod magna ac ante aliquam, vel tincidunt augue tempor. Quisque tristique justo ut nulla efficitur, nec elementum tortor egestas.</p>
+        <p>Suspendisse potenti. Aenean consequat, libero eu viverra laoreet, purus risus facilisis libero, in tempor dui nulla ac felis. Cras tincidunt malesuada magna vel consequat. Sed euismod turpis id eros lobortis, eu ullamcorper eros dictum.</p>
+      </div>
+      <div class="image">
+        <img src="https://via.placeholder.com/400" alt="Overview Image">
+      </div>
+    </div>
+  </section>
+  <hr style="border: 1px dotted #007bff; margin: 0;">
+  <section class="overview-section" id="e">
+    <div class="overview-content">
+      <div class="text">
+        <h2>Eligibility</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula ipsum vel libero fermentum, non dapibus nunc venenatis. Vestibulum euismod magna ac ante aliquam, vel tincidunt augue tempor. Quisque tristique justo ut nulla efficitur, nec elementum tortor egestas.</p>
+        <p>Suspendisse potenti. Aenean consequat, libero eu viverra laoreet, purus risus facilisis libero, in tempor dui nulla ac felis. Cras tincidunt malesuada magna vel consequat. Sed euismod turpis id eros lobortis, eu ullamcorper eros dictum.</p>
+      </div>
+     
+    </div>
+  </section>
+  <hr style="border: 1px dotted #007bff; margin: 0;">
+  <section class="overview-section" id="p">
+    <div class="overview-content">
+      <div class="text">
+        <h2>Preparation</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula ipsum vel libero fermentum, non dapibus nunc venenatis. Vestibulum euismod magna ac ante aliquam, vel tincidunt augue tempor. Quisque tristique justo ut nulla efficitur, nec elementum tortor egestas.</p>
+        <p>Suspendisse potenti. Aenean consequat, libero eu viverra laoreet, purus risus facilisis libero, in tempor dui nulla ac felis. Cras tincidunt malesuada magna vel consequat. Sed euismod turpis id eros lobortis, eu ullamcorper eros dictum.</p>
+      </div>
+     
+    </div>
+  </section>
+  <hr style="border: 1px dotted #007bff; margin: 0;">
+  <section class="overview-section" id="at">
+    <div class="overview-content">
+      <div class="text">
+        <h2>About Treatment</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula ipsum vel libero fermentum, non dapibus nunc venenatis. Vestibulum euismod magna ac ante aliquam, vel tincidunt augue tempor. Quisque tristique justo ut nulla efficitur, nec elementum tortor egestas.</p>
+        <p>Suspendisse potenti. Aenean consequat, libero eu viverra laoreet, purus risus facilisis libero, in tempor dui nulla ac felis. Cras tincidunt malesuada magna vel consequat. Sed euismod turpis id eros lobortis, eu ullamcorper eros dictum.</p>
+      </div>
+     
+    </div>
+  </section>
+  <hr style="border: 1px dotted #007bff; margin: 0;">
+  <section class="overview-section" id="ptc">
+    <div class="overview-content">
+      <div class="text">
+        <h2>Post treatment care</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula ipsum vel libero fermentum, non dapibus nunc venenatis. Vestibulum euismod magna ac ante aliquam, vel tincidunt augue tempor. Quisque tristique justo ut nulla efficitur, nec elementum tortor egestas.</p>
+        <p>Suspendisse potenti. Aenean consequat, libero eu viverra laoreet, purus risus facilisis libero, in tempor dui nulla ac felis. Cras tincidunt malesuada magna vel consequat. Sed euismod turpis id eros lobortis, eu ullamcorper eros dictum.</p>
+      </div>
+     
+    </div>
+  </section>
+  <hr style="border: 1px dotted #007bff; margin: 0;">
+  <section class="overview-section" id="rt">
+    <div class="overview-content">
+      <div class="text">
+        <h2>Recovery tips</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula ipsum vel libero fermentum, non dapibus nunc venenatis. Vestibulum euismod magna ac ante aliquam, vel tincidunt augue tempor. Quisque tristique justo ut nulla efficitur, nec elementum tortor egestas.</p>
+        <p>Suspendisse potenti. Aenean consequat, libero eu viverra laoreet, purus risus facilisis libero, in tempor dui nulla ac felis. Cras tincidunt malesuada magna vel consequat. Sed euismod turpis id eros lobortis, eu ullamcorper eros dictum.</p>
+      </div>
+     
+    </div>
+  </section>
+  <hr style="border: 1px dotted #007bff; margin: 0;">
+  <section class="overview-section" id="faq">
+    <div class="overview-content">
+      <div class="text">
+        <h2>FAQS</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vehicula ipsum vel libero fermentum, non dapibus nunc venenatis. Vestibulum euismod magna ac ante aliquam, vel tincidunt augue tempor. Quisque tristique justo ut nulla efficitur, nec elementum tortor egestas.</p>
+        <p>Suspendisse potenti. Aenean consequat, libero eu viverra laoreet, purus risus facilisis libero, in tempor dui nulla ac felis. Cras tincidunt malesuada magna vel consequat. Sed euismod turpis id eros lobortis, eu ullamcorper eros dictum.</p>
+      </div>
+     
+    </div>
+  </section>
+  <hr style="border: 1px dotted #007bff; margin: 0;">
+
+  <section class="content-section" id="ps">
+    <div class="section-text">
+      <h2>Patient Stories</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus volutpat nunc ut lectus volutpat, eget volutpat arcu volutpat. Cras cursus quam et interdum vulputate. Integer ac tortor ac enim placerat scelerisque. Nam non gravida sapien.</p>
+    </div>
+  
+    <!-- Combined Media Carousel (Video, Image) -->
+    <div class="owl-carousel owl-media">
+      <!-- Video 1 -->
+      <div class="item">
+        <iframe src="https://www.youtube.com/embed/xyz123" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <!-- Image 1 -->
+      <div class="item">
+        <img src="https://tse2.mm.bing.net/th?id=OIP.hiMWvVuKRN2v2UnDFtSuxAAAAA&pid=Api&P=0&h=180" alt="Image 1">
+      </div>
+      <!-- Video 2 -->
+      <div class="item">
+        <iframe src="https://www.youtube.com/embed/abc456" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <!-- Image 2 -->
+      <div class="item">
+        <img src="https://tse2.mm.bing.net/th?id=OIP.hiMWvVuKRN2v2UnDFtSuxAAAAA&pid=Api&P=0&h=180" alt="Image 2">
+      </div>
+      <!-- Video 3 -->
+      <div class="item">
+        <iframe src="https://www.youtube.com/embed/xyz789" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <!-- Image 3 -->
+      <div class="item">
+        <img src="https://tse2.mm.bing.net/th?id=OIP.hiMWvVuKRN2v2UnDFtSuxAAAAA&pid=Api&P=0&h=180" alt="Image 3">
+      </div>
+    </div>
+  </section>
+  
+  <section class="top-doctors-section">
+    <h2 class="section-heading">Top Doctors</h2>
+    <div class="carousel-container">
+      <button class="nav-button prev">&lt;</button>
+      <div class="doctors-carousel">
+        <div class="doctor-card" id="dr1">
+          <img src="#" alt="Doctor 1">
+          <div class="doctor-info">
+           <h3>Dr. Briana Tozour</h3>
+            <p>Specialist</p>
+          </div>
+        </div>
+        <div class="doctor-card" id="dr2">
+          <img src="#" alt="Doctor 2">
+          <div class="doctor-info">
+            <h3>Dr. Pricilla Preez</h3>
+            <p>Surgeon</p>
+          </div>
+        </div>
+        <div class="doctor-card">
+          <img src="#" alt="Doctor 3">
+          <div class="doctor-info" id="dr3">
+            <h3>Dr. Eliana Maia</h3>
+            <p>Cardiologist</p>
+          </div>
+        </div>
+        <div class="doctor-card" id="dr4">
+          <img src="#" alt="Doctor 4">
+          <div class="doctor-info">
+            <h3>Dr. Adam Smith</h3>
+            <p>Pediatrician</p>
+          </div>
+        </div>
+        <!-- Add more doctor cards as needed -->
+      </div>
+      <button class="nav-button next">&gt;</button>
+    </div>
+  </section>
+  <br>
+   
+  <section class="top-doctors-section"id="top-hospitals-section">
+    <h2 class="section-heading">Top Hospitals</h2>
+    <div class="carousel-container">
+      <button class="nav-button prev">&lt;</button>
+      <div class="doctors-carousel">
+        <div class="doctor-card" id="h1">
+          <img src="#" alt="Doctor 1">
+          <div class="doctor-info">
+            <h3>Apollo Hostpital</h3>
+            <p>Navi Mumbai,Thane</p>
+          </div>
+        </div>
+        <div class="doctor-card" id="h2">
+          <img src="#" alt="Doctor 2">
+          <div class="doctor-info">
+            <h3>Jupiter Hospital</h3>
+            <p>Thane</p>
+          </div>
+        </div>
+        <div class="doctor-card" id="h3">
+          <img src="#" alt="Doctor 3">
+          <div class="doctor-info">
+            <h3>Kaushalya Hospital</h3>
+            <p>Thane</p>
+          </div>
+        </div>
+        <div class="doctor-card" id="h4">
+          <img src="#" alt="Doctor 4">
+          <div class="doctor-info">
+            <h3>Lilavati</h3>
+            <p>Mumbai</p>
+          </div>
+        </div>
+        <!-- Add more doctor cards as needed -->
+      </div>
+      <button class="nav-button next">&gt;</button>
+    </div>
+  </section>
+  <br>
+  <section class="stay-healthy-section">
+    <h3 class="stay-healthy-heading">stay healthy stay safe</h3>
+    <h2 class="vedic-care-heading">Vedic Care</h2>
+    <p class="fitness-question">Want to know how fit you are?</p>
+    <button class="take-survey-btn">Take a Survey</button>
+</section>
+
+    </section>
+   <!--footer starts from here-->
+<footer class="footer">
+    <div class="container bottom_border">
+    <div class="row">
+    <div class=" col-sm-4 col-md col-sm-4  col-12 col">
+    <h5 class="headin5_amrc col_white_amrc pt2">Find us</h5>
+    <!--headin5_amrc-->
+    <p class="mb10">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+    <p><i class="fa fa-location-arrow"></i> 9878/25 sec 9 rohini 35 </p>
+    <p><i class="fa fa-phone"></i>  +91-9999878398  </p>
+    <p><i class="fa fa fa-envelope"></i> info@example.com  </p>
+    
+    
+    </div>
+    
+    
+    <div class=" col-sm-4 col-md  col-6 col">
+    <h5 class="headin5_amrc col_white_amrc pt2">top doctors</h5>
+    <!--headin5_amrc-->
+    <ul class="footer_ul_amrc">
+    <li><a href="#dr1">doctor 1</a></li>
+    <li><a href="#dr2">doctor 2</a></li>
+    <li><a href="#dr3">doctor 3</a></li>
+    <li><a href="#dr4">doctor 4</a></li>
+    
+    </ul>
+    <!--footer_ul_amrc ends here-->
+    </div>
+    
+    
+    <div class=" col-sm-4 col-md  col-6 col">
+    <h5 class="headin5_amrc col_white_amrc pt2">top hospitals</h5>
+    <!--headin5_amrc-->
+    <ul class="footer_ul_amrc">
+    <li><a href="#h1">h1</a></li>
+    <li><a href="#h2">h2</a></li>
+    <li><a href="#h3">h3</a></li>
+    <li><a href="#h4">h4</a></li>
+ 
+    </ul>
+    <!--footer_ul_amrc ends here-->
+    </div>
+    
+    
+    <div class="doctor-join-card">
+        <h3>Are you a Doctor? Join Medical Services</h3>
+        <p>Join our team and make a difference in healthcare. Start your journey with us today!</p>
+        <button class="join-button">Join Now</button>
+    </div>
+    <div class="container">
+        <div class="footer-left"> 
+            <img src="./icons8-hospital-64 (1).png" alt="Logo" class="footer-logo">
+            <p class="footer-description">VediCare-Your Health Matters</p>
+        </div>
+    
+        <div class="footer-right">
+          
+           
+        </div>
+    
+        <ul class="social_footer_ul">
+            <li><a href="http://webenlance.com"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="http://webenlance.com"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="http://webenlance.com"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="http://webenlance.com"><i class="fab fa-instagram"></i></a></li>
+        </ul>
+    </div>
+    
+    
+    </footer>
+    
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+  <!--pop up-->
+  <div class="contact-popup" id="contact-popup">
+    <div class="popup-content">
+      <h2>Need help? Contact us!</h2>
+      <p>If you have any questions or need assistance, feel free to reach out to us!</p>
+      <button id="contact-btn">Contact Now</button>
+    </div>
+  </div>
+  
+  
+  
+  
+  
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    
+      <script>
+        $(document).ready(function() {
+          $(".owl-carousel").owlCarousel({
+            items: 1,
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            autoplayHoverPause: true,
+            nav: true,
+            dots: true
+          });
+        });
+      </script>
+    <script>
+      // JavaScript to toggle the search input visibility
+      document.getElementById('search-toggle').addEventListener('click', function() {
+          const searchContainer = document.querySelector('.search-container');
+          searchContainer.style.display = searchContainer.style.display === 'block' ? 'none' : 'block'; // Toggle search input visibility
+      });
+
+      // JavaScript to toggle the menu on mobile view
+      document.getElementById('menu-toggle').addEventListener('click', function() {
+          const menuBar = document.querySelector('.menu-bar');
+          menuBar.classList.toggle('active'); // Toggle the active class to show or hide the menu items
+      });
+  </script>
+    <script>
+       
+
+
+        $(document).ready(function() {
+  // Initialize Video Owl Carousel
+  $('.owl-carousel.owl-video').owlCarousel({
+    loop: true,
+    margin: 10,
+    nav: true,
+    responsive: {
+      0: {
+        items: 1
+      },
+      600: {
+        items: 2
+      },
+      1000: {
+        items: 3
+      }
+    }
+  });
+
+  // Initialize Image Owl Carousel
+  $(document).ready(function() {
+  // Initialize Combined Media Owl Carousel
+  $('.owl-carousel.owl-media').owlCarousel({
+    loop: true,
+    margin: 10,
+    nav: true,
+    responsive: {
+      0: {
+        items: 1
+      },
+      600: {
+        items: 2
+      },
+      1000: {
+        items: 3
+      }
+    }
+  });
+});
+
+
+    </script>
+    <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const carousel = document.querySelector(".doctors-carousel");
+    const prevButton = document.querySelector(".nav-button.prev");
+    const nextButton = document.querySelector(".nav-button.next");
+
+    let scrollAmount = 0;
+    const cardWidth = carousel.querySelector(".doctor-card").offsetWidth + 20; // Include gap
+
+    prevButton.addEventListener("click", () => {
+      scrollAmount = Math.max(0, scrollAmount - cardWidth);
+      carousel.style.transform = `translateX(-${scrollAmount}px)`;
+    });
+
+    nextButton.addEventListener("click", () => {
+      const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+      scrollAmount = Math.min(maxScroll, scrollAmount + cardWidth);
+      carousel.style.transform = `translateX(-${scrollAmount}px)`;
+    });
+
+    // Reset scrollAmount if window is resized
+    window.addEventListener("resize", () => {
+      scrollAmount = 0;
+      carousel.style.transform = `translateX(0px)`;
+    });
+  });
+  document.addEventListener("DOMContentLoaded", () => {
+  const hospitalCarousel = document.querySelector("#top-hospitals-section .doctors-carousel");
+  const prevHospitalButton = document.querySelector("#top-hospitals-section .nav-button.prev");
+  const nextHospitalButton = document.querySelector("#top-hospitals-section .nav-button.next");
+
+  let hospitalScrollAmount = 0;
+  const hospitalCardWidth = hospitalCarousel.querySelector(".doctor-card").offsetWidth + 20; // Include gap
+
+  prevHospitalButton.addEventListener("click", () => {
+    hospitalScrollAmount = Math.max(0, hospitalScrollAmount - hospitalCardWidth);
+    hospitalCarousel.style.transform = `translateX(-${hospitalScrollAmount}px)`;
+  });
+
+  nextHospitalButton.addEventListener("click", () => {
+    const maxHospitalScroll = hospitalCarousel.scrollWidth - hospitalCarousel.clientWidth;
+    hospitalScrollAmount = Math.min(maxHospitalScroll, hospitalScrollAmount + hospitalCardWidth);
+    hospitalCarousel.style.transform = `translateX(-${hospitalScrollAmount}px)`;
+  });
+
+  // Reset scrollAmount for the hospital section if window is resized
+  window.addEventListener("resize", () => {
+    hospitalScrollAmount = 0;
+    hospitalCarousel.style.transform = `translateX(0px)`;
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const contactPopup = document.getElementById("contact-popup");
+  const contactBtn = document.getElementById("contact-btn");
+
+  // Show the popup after 2 seconds
+  setTimeout(function () {
+    contactPopup.classList.add("show");
+  }, 2000);
+
+  // Hide the popup when the button is clicked
+  contactBtn.addEventListener("click", function () {
+    alert("Redirecting to Contact Page...");
+    // Redirect or show contact form functionality here
+    window.location.href = "#"; // Replace with your contact page URL
+  });
+});
+/* Page Loader - Fullscreen Overlay */
+
+
+window.addEventListener("load", () => {
+  const loader = document.querySelector(".loader");
+
+  loader.classList.add("loader--hidden");
+
+  loader.addEventListener("transitionend", () => {
+    document.body.removeChild(loader);
+  });
+});
+
+
+</script>
+
+
+
+</body>
+</html>

@@ -23,4 +23,5 @@ If back-end or interactivity is needed, this project can be expanded with:
 1)JavaScript for dynamic functionality.
 2)Integration with back-end services using Node.js, Django, etc.
 
+Screenshots have been attatched 
 [Tanvi Hirlekar] - Front-end Developer

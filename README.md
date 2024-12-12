@@ -7,7 +7,7 @@ Features:
 4)Optimized for desktop and mobile devices.
 project-folder/
 
-├── index.html       # includes HTML,CSS,JavaScript File
+├── index.html       # includes HTML,CSS,JavaScript
 |
 │       
 ├──images           # contain images neccesary for project
